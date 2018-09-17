@@ -26,7 +26,17 @@ void UiUtils::DrawLabel(const string & textString, glm::vec2 & p, int height) {
 void UiUtils::DrawLabel(const string & textString, glm::vec2 & p, const ofColor & colour, const ofColor & bgColour, int height) {
 	if (font.isLoaded())
 	{
+		ofPushStyle();
+		ofSetColor(bgColour);
+		auto bounds = font.getStringBoundingBox(textString, p.x, p.y);
+		int padding = 12;
+		bounds.width += padding;
+		bounds.height += padding;
+		bounds.position -= glm::vec3(padding*0.5, padding*0.5, 0);
+		ofDrawRectangle(bounds);
+		ofSetColor(colour);
 		font.drawString(textString, p.x, p.y);
+		ofPopStyle();
 	}
 	else
 	{
